@@ -77,14 +77,6 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
-gulp.task('browser-sync', ['nodemon'], function(done) {
-  browserSync({
-    proxy: "localhost:3000",  // local node app address
-    port: 5000,  // use *different* port than above
-    notify: true
-  }, done);
-});
-
 gulp.task('nodemon', function (cb) {
   var called = false;
   return nodemon(nodemonConfig)
@@ -153,7 +145,7 @@ gulp.task('connectDist', function (cb) {
 
 
 // *** default task *** //
-gulp.task('default', ['browser-sync', 'watch'], function(){});
+gulp.task('default', ['watch'], function(){});
 
 // *** build task *** //
 gulp.task('build', function() {
