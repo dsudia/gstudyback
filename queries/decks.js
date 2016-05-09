@@ -15,6 +15,10 @@ module.exports = {
                     descrip: descrip});
   },
 
+  getDeck: function(deckId) {
+    decks().where('id', deckId);
+  }
+
   deleteDeck: function(deckId) {
     decks().where('id', deckId).del();
   }
