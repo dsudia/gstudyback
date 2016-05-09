@@ -4,9 +4,10 @@ var io = require('socket.io');
 
 module.exports = function(req, res, next) {
   var cards = req.body.card
+  var deckId;
   return deckQueries.addDeck(req.params.userId, req.body.name, req.body.descrip)
   .then(function(deck) {
-    var deckId = deck[0];
+    deckId = deck[0];
     // io.sockets.emit("Someone just created the deck " + req.body.name);
     var promises = [];
     cards.forEach(function(el, ind, arr) {
@@ -15,7 +16,9 @@ module.exports = function(req, res, next) {
     return Promise.all(promises)
     .then(function(data) {
       console.log('sending response')
-      res.status(200).json({message: "Deck and cards added successfully!"});
+      res.status(200).json({
+        deck: deckId,
+        message: "Deck and cards added successfully!"});
     })
     .catch(function(err) {
       console.log(err);
