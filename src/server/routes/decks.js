@@ -5,7 +5,7 @@ var add = require('./deckRoutes/addDeck');
 var getDecks = require('./deckRoutes/getDecks');
 var delDeck = require('./deckRoutes/deleteDeck');
 
-router.get('/add/:userId', function(req, res, next) {
+router.post('/add/:userId', function(req, res, next) {
   add(req, res, next);
 });
 

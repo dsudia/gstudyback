@@ -10,7 +10,7 @@ module.exports = {
   },
 
   addCard: function(deckId, question, answer, score, qImg, aImg) {
-    cards().insert({
+    return cards().insert({
       deck_id: deckId,
       question: question,
       answer: answer,

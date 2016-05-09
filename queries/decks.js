@@ -10,9 +10,10 @@ module.exports = {
   },
 
   addDeck: function(userId, name, descrip) {
-    decks().insert({user_id: userId,
+    return decks().insert({user_id: userId,
                     name: name,
-                    descrip: descrip});
+                    descrip: descrip})
+                    .returning('id');
   },
 
   getDeck: function(deckId) {
