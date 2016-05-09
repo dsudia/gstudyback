@@ -1,21 +1,6 @@
-
+var moment = require('moment');
+var jwt = require('jwt-simple');
 var bcrypt = require('bcrypt');
-
-function ensureAuthentication(req, res, next) {
-  if (req.user) {
-    return next();
-  } else {
-    return res.redirect('/login');
-  }
-}
-
-function loginRedirect(req, res, next) {
-  if (req.user) {
-    return res.redirect('/');
-  } else {
-    return next();
-  }
-}
 
 function hash(password) {
   return new Promise(function (resolve, reject) {
@@ -41,9 +26,17 @@ function checkPassword(password, hashed) {
   });
 }
 
+function generateToken(user) {
+  var payload = {
+    exp: moment().add(14, 'days').unix(),
+    iat: moment().unix(),
+    sub: user.id
+  };
+  return jwt.encode(payload, process.env.TOKEN_SECRET);
+}
+
 module.exports = {
-  ensureAuthentication: ensureAuthentication,
-  loginRedirect: loginRedirect,
+  generateToken: generateToken,
   hash: hash,
-  checkPassword: checkPassword,
+  checkPassword: checkPassword
 };

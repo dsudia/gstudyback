@@ -1,13 +1,21 @@
 var userQueries = require('../../../../queries/users.js');
+var helpers = require('../../lib/helpers');
 var io = require('socket.io');
 
 module.exports = function(req, res, next) {
-  userQueries.addUser(req.body.username, req.body.password)
+  return userQueries.addUser(req.body.username, req.body.password)
     .then(function(user) {
-      res.status(200).send(user[0]);
+      var token = helpers.generateToken(user[0]);
+      res.status(200).json({
+        status: 'success',
+        data: {
+          token: token,
+          user: user[0].username
+        }
+      })
       io.sockets.emit(user[0].username + " just joined gStudying!");
     })
     .catch(function(err) {
-      res.status(400).send({message: 'There was a problem creating the user.'});
+      return next(err);
     });
 }
