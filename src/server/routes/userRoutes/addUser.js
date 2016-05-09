@@ -3,19 +3,21 @@ var helpers = require('../../lib/helpers');
 var io = require('socket.io');
 
 module.exports = function(req, res, next) {
-  return userQueries.addUser(req.body.username, req.body.password)
-    .then(function(user) {
-      var token = helpers.generateToken(user[0]);
-      res.status(200).json({
-        status: 'success',
-        data: {
-          token: token,
-          user: user[0].username
-        }
+  if (req.body.password === req.body.confPass) {
+    return userQueries.addUser(req.body.username, req.body.password)
+      .then(function(user) {
+        var token = helpers.generateToken(user[0]);
+        res.status(200).json({
+          status: 'success',
+          data: {
+            token: token,
+            user: user[0].username
+          }
+        })
+        io.sockets.emit(user[0].username + " just joined gStudying!");
       })
-      io.sockets.emit(user[0].username + " just joined gStudying!");
-    })
-    .catch(function(err) {
-      return next(err);
-    });
+      .catch(function(err) {
+        return next(err);
+      });
+  }
 }

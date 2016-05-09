@@ -13,7 +13,8 @@ module.exports = {
     return users().insert({
       username: username,
       password: password
-    });
+    })
+    .returning('username');
   }
 
 }
