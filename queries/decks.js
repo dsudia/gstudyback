@@ -17,7 +17,7 @@ module.exports = {
 
   getDeck: function(deckId) {
     decks().where('id', deckId);
-  }
+  },
 
   deleteDeck: function(deckId) {
     decks().where('id', deckId).del();

@@ -9,7 +9,6 @@ module.exports = function(req, res, next) {
     .then(function(deck) {
       io.sockets.emit('Someone is studying ' + deck[0].name)
       res.status(200).send(cards);
-    })
-
+    });
   });
 }

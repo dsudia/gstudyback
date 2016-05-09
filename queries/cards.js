@@ -24,7 +24,7 @@ module.exports = {
     cards().where('id', cardId).update({
       score: score
     });
-  }
+  },
 
   deleteCard: function(cardId) {
     cards().where('id', cardId).del();

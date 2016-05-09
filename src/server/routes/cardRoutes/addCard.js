@@ -5,5 +5,4 @@ module.exports = function(req, res, next) {
     .then(function(card) {
       res.status(200).send(card[0]);
     });
-  });
 }
