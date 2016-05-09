@@ -4,7 +4,7 @@ var helpers = require('../lib/helpers');
 var login = require('./userRoutes/loginUser');
 var add = require('./userRoutes/addUser');
 
-router.get('/login', function(req, res, next) {
+router.post('/login', function(req, res, next) {
   login(req, res, next);
 });
 

@@ -5,17 +5,26 @@ var io = require('socket.io');
 module.exports = function(req, res, next) {
   userQueries.getUserByUsername(req.body.username)
     .then(function(user) {
-      if (user[0] === undefined) {
-        res.status(401).json({
+      var userData = JSON.stringify(user[0]);
+      userData = JSON.parse(userData)
+      if (userData === undefined) {
+        res.json({
           status: 'failed',
           message: 'Incorrect username or password'});
       } else {
-        var token = helpers.generateToken(user[0]);
-        res.status(200).json({
-          token: token,
-          user: user.username
-        });
-        io.sockets.emit(user[0] +  ' just logged in!')
+        if (userData.password === req.body.password) {
+          var token = helpers.generateToken(userData);
+          res.json({
+            token: token,
+            user: userData.username
+          });
+          // io.sockets.emit(userData +  ' just logged in!')
+        } else {
+          res.json({
+            status: 'failed',
+            message: 'Incorrect username or password'
+          });
+        }
       }
     })
     .catch(function(err) {

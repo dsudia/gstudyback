@@ -13,7 +13,6 @@ var Promise = require('bluebird');
 var passport = require('./lib/passport');
 var knex = require('../../db/knex');
 
-
 // *** routes *** //
 var routes = require('./routes/index.js');
 var userRoutes = require('./routes/users');
@@ -24,6 +23,12 @@ var cardRoutes = require('./routes/cards');
 // *** express instance *** //
 var app = express();
 
+// *** allow CORS *** //
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // *** static directory *** //
 app.set('views', path.join(__dirname, 'views'));
