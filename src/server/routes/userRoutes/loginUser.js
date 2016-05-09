@@ -1,4 +1,4 @@
-var userQueries = require('../../../queries/users.js');
+var userQueries = require('../../../../queries/users.js');
 
 module.exports = function(req, res, next) {
   userQueries.getUserByUsername(req.body.username)
@@ -7,5 +7,5 @@ module.exports = function(req, res, next) {
     })
     .catch(function(err) {
       res.status(400).send({message: 'Incorrect username or password'});
-    })
+    });
 }
