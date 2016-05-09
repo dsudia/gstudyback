@@ -41,4 +41,25 @@ describe('API Routes', function() {
 
   });
 
+  describe('add user', function() {
+
+    it('should add a user with passed information', function(done) {
+      return chai.request(server)
+        .post('/users/add')
+        .send({username: 'dsudia', password: 'abc123'})
+        .end(function(err, res) {
+          return chai.request(server)
+          .get('/users/login')
+          .send({username: 'dsudia', password: 'abc123'})
+          .end(function(err, res) {
+            res.should.have.status(200);
+            res.should.be.json;
+            res.body.should.have.property('username');
+            res.body.username.should.equal('dsudia');
+            done();
+          });
+        });
+    });
+  });
+
 });
