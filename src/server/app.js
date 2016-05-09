@@ -16,16 +16,13 @@ var knex = require('../../db/knex');
 
 // *** routes *** //
 var routes = require('./routes/index.js');
+var userRoutes = require('./routes/users');
+var deckRoutes = require('./routes/decks');
+var cardRoutes = require('./routes/cards');
 
 
 // *** express instance *** //
 var app = express();
-
-
-// *** view engine *** //
-var swig = new swig.Swig();
-app.engine('html', swig.renderFile);
-app.set('view engine', 'html');
 
 
 // *** static directory *** //
@@ -50,6 +47,9 @@ app.use(passport.session());
 
 // *** main routes *** //
 app.use('/', routes);
+app.use('/users', userRoutes);
+app.use('/decks', deckRoutes);
+app.use('/cards', cardRoutes);
 
 
 // catch 404 and forward to error handler
